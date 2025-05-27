@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Çekişmesiz yargı işleri için avukatsız başvuru rehberi">
+    <title>Çekişmesiz Yargı - Avukatsız Başvuru Rehberi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e40af;
+            --light-blue: #3b82f6;
+            --navy: #0f172a;
+            --dark-gray: #1e293b;
+            --light-gray: #64748b;
+            --white: #ffffff;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --shadow: rgba(37, 99, 235, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--dark-gray) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-blue);
+        }
+
+        .dropdown-item h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .dropdown-item p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page-section {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-blue), var(--light-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--navy);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            flex-shrink: 0;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .disclaimer-text {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .disclaimer-text h3 {
+            color: var(--primary-blue);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+        }
+
+        .disclaimer-text ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+
+        .disclaimer-text li {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.5);
+            flex-shrink: 0;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: var(--primary-blue);
+        }
+
+        .checkbox-label {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-continue {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .btn-continue.enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .btn-continue.enabled:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Process Page Styles */
+        .process-page {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .process-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .process-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 auto 1rem;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(15, 23, 42, 0.98);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                border: none;
+                background: transparent;
+                margin-top: 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 1rem;
+            }
+
+            .modal-body {
+                max-height: 40vh;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-blue);
+        }
+
+        /* Bilgilendirme sayfası için yeni stiller */
+        .info-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+
+        .info-section h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .info-button {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-button:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .court-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-group select,
+        .form-group input {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.95);
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: var(--navy);
+            color: var(--text-primary);
+            padding: 0.8rem;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+
+        .form-group select:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .form-group input[readonly] {
+            background: rgba(15, 23, 42, 0.7);
+            cursor: default;
+        }
+
+        .documents-list {
+            list-style: none;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .documents-list li {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .documents-list li i {
+            color: var(--primary-blue);
+        }
+
+        .result-box {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--primary-blue);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .result-box h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .result-box p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Dilekçe şablonu için yeni stiller */
+        .dilekce-container {
+            background: var(--navy);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+
+        .dilekce-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .dilekce-title {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .dilekce-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dilekce-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .dilekce-field label {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .dilekce-field input,
+        .dilekce-field textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.95);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .dilekce-field textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .dilekce-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .dilekce-button {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dilekce-button:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .dilekce-button.secondary {
+            background: var(--dark-gray);
+        }
+
+        .dilekce-button.secondary:hover {
+            background: var(--light-gray);
+        }
+
+        #dilekcePreview {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            color: black;
+            border-radius: 8px;
+        }
+
+        #dilekcePreview.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-balance-scale"></i>
+                Çekişmesiz Yargı
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showPage('home')">
+                        <i class="fas fa-home"></i>
+                        Ana Sayfa
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cogs"></i>
+                        İşlemler
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item" onclick="openProcessPage('ad-soyad')">
+                            <h4>Ad Soyad Değişikliği</h4>
+                            <p>Kişisel ad ve soyad değişikliği işlemleri</p>
+                        </div>
+                        <div class="dropdown-item" onclick="openProcessPage('evlenme-izni')">
+                            <h4>Evlenme Yaşı Gelmeyene Evlenme İzni</h4>
+                            <p>18 yaşından küçükler için evlenme izni</p>
+                        </div>
+                        <div class="dropdown-item" onclick="openProcessPage('ergin-kilma')">
+                            <h4>Ergin Kılınma</h4>
+                            <p>Reşit olmayan kişilerin ergin kılınması</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showPage('contact')">
+                        <i class="fas fa-envelope"></i>
+                        İletişim
+                    </a>
+                </li>
+            </ul>
+            
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Ana Sayfa -->
+        <section id="home" class="page-section active">
+            <div class="page-title">Ana Sayfa</div>
+            <div class="page-subtitle">Çekişmesiz yargı işlemleri için kapsamlı rehber</div>
+            
+            <div class="info-section">
+                <h2>Hoş Geldiniz</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    Bu platform, çekişmesiz yargı işlemlerinizi kolaylaştırmak için tasarlanmıştır. 
+                    Üst menüden yapmak istediğiniz işlemi seçerek başlayabilirsiniz.
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="step-title">İşlem Seçin</div>
+                        <div class="step-description">
+                            Üst menüden yapmak istediğiniz işlemi seçin (Ad Soyad Değişikliği, Evlenme İzni veya Ergin Kılınma)
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Bilgileri Girin</div>
+                        <div class="step-description">
+                            İlgili formları doldurun ve gerekli belgeleri hazırlayın
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Dilekçe Oluşturun</div>
+                        <div class="step-description">
+                            Sistem otomatik olarak dilekçenizi oluşturacak ve size sunacaktır
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- İletişim Sayfası -->
+        <section id="contact" class="page-section">
+            <div class="page-title">İletişim</div>
+            <div class="page-subtitle">Bizimle iletişime geçin</div>
+            <div style="text-align: center; padding: 4rem 0;">
+                <p style="font-size: 1.2rem; color: var(--text-secondary);">
+                    İletişim sayfası içeriği burada geliştirilecek...
+                </p>
+            </div>
+        </section>
+
+        <!-- Ad Soyad Değişikliği -->
+        <section id="ad-soyad" class="page-section">
+            <div class="process-page">
+                <div class="process-title">Ad Soyad Değişikliği</div>
+                <div class="process-description">
+                    Kişisel ad ve soyadınızı değiştirmek için gerekli tüm işlemler ve belgeler
+                </div>
+
+                <div class="info-section">
+                    <h2>Dilekçe Şablonu Hazırlayıcı</h2>
+                    <button class="info-button" onclick="showDilekceHazirla('ad-soyad')">
+                        <i class="fas fa-file-alt"></i>
+                        Ad Soyad Değişikliği Dilekçesi Oluştur
+                    </button>
+                </div>
+
+                <div class="info-section">
+                    <h2>Mahkeme Tespiti</h2>
+                    <form id="courtFormAdSoyad" class="court-form">
+                        <div class="form-group">
+                            <label for="ilAdSoyad">İl Seçiniz:</label>
+                            <select id="ilAdSoyad" name="il" required>
+                                <option value="">İl seçiniz</option>
+                                <option value="istanbul">İstanbul</option>
+                                <option value="ankara">Ankara</option>
+                                <option value="izmir">İzmir</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ilceAdSoyad">İlçe Seçiniz:</label>
+                            <select id="ilceAdSoyad" name="ilce" required>
+                                <option value="">İlçe seçiniz</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mahkemeAdSoyad">Görevli ve Yetkili Mahkeme:</label>
+                            <input type="text" id="mahkemeAdSoyad" name="mahkeme" readonly>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="info-section">
+                    <h2>Gerekli Belgeler</h2>
+                    <ul class="documents-list">
+                        <li><i class="fas fa-id-card"></i> Nüfus cüzdanı</li>
+                        <li><i class="fas fa-file-alt"></i> Ad değişikliği dilekçesi</li>
+                        <li><i class="fas fa-file-contract"></i> Varsa evlilik cüzdanı</li>
+                        <li><i class="fas fa-file-signature"></i> Varsa nüfus kayıt örneği</li>
+                    </ul>
+                </div>
+
+                <div class="result-box">
+                    <h3>Önemli Bilgilendirme</h3>
+                    <p>Ad değişikliği başvurunuz için tüm belgelerin eksiksiz olması gerekmektedir.</p>
+                    <p>Mahkeme seçiminizi doğru yaptığınızdan emin olunuz.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Evlenme İzni -->
+        <section id="evlenme-izni" class="page-section">
+            <div class="process-page">
+                <div class="process-title">Evlenme Yaşı Gelmeyene Evlenme İzni</div>
+                <div class="process-description">
+                    18 yaşından küçük kişiler için evlenme izni başvuru süreci
+                </div>
+
+                <div class="info-section">
+                    <h2>Dilekçe Şablonu Hazırlayıcı</h2>
+                    <button class="info-button" onclick="showDilekceHazirla('evlenme-izni')">
+                        <i class="fas fa-file-alt"></i>
+                        Evlenme İzni Dilekçesi Oluştur
+                    </button>
+                </div>
+
+                <div class="info-section">
+                    <h2>Mahkeme Tespiti</h2>
+                    <form id="courtFormEvlenme" class="court-form">
+                        <div class="form-group">
+                            <label for="ilEvlenme">İl Seçiniz:</label>
+                            <select id="ilEvlenme" name="il" required>
+                                <option value="">İl seçiniz</option>
+                                <option value="istanbul">İstanbul</option>
+                                <option value="ankara">Ankara</option>
+                                <option value="izmir">İzmir</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ilceEvlenme">İlçe Seçiniz:</label>
+                            <select id="ilceEvlenme" name="ilce" required>
+                                <option value="">İlçe seçiniz</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mahkemeEvlenme">Görevli ve Yetkili Mahkeme:</label>
+                            <input type="text" id="mahkemeEvlenme" name="mahkeme" readonly>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="info-section">
+                    <h2>Gerekli Belgeler</h2>
+                    <ul class="documents-list">
+                        <li><i class="fas fa-id-card"></i> Nüfus cüzdanı</li>
+                        <li><i class="fas fa-file-alt"></i> Evlenme izni dilekçesi</li>
+                        <li><i class="fas fa-file-medical"></i> Sağlık raporu</li>
+                        <li><i class="fas fa-file-signature"></i> Veli muvafakatnamesi</li>
+                    </ul>
+                </div>
+
+                <div class="result-box">
+                    <h3>Önemli Bilgilendirme</h3>
+                    <p>Evlenme izni başvurusu için tüm belgelerin eksiksiz olması gerekmektedir.</p>
+                    <p>Sağlık raporunun güncel olmasına dikkat ediniz.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ergin Kılınma -->
+        <section id="ergin-kilma" class="page-section">
+            <div class="process-page">
+                <div class="process-title">Ergin Kılınma</div>
+                <div class="process-description">
+                    Reşit olmayan kişilerin hukuki olarak ergin kılınması işlemleri
+                </div>
+
+                <div class="info-section">
+                    <h2>Dilekçe Şablonu Hazırlayıcı</h2>
+                    <button class="info-button" onclick="showDilekceHazirla('ergin-kilma')">
+                        <i class="fas fa-file-alt"></i>
+                        Ergin Kılınma Dilekçesi Oluştur
+                    </button>
+                </div>
+
+                <div class="info-section">
+                    <h2>Mahkeme Tespiti</h2>
+                    <form id="courtFormErgin" class="court-form">
+                        <div class="form-group">
+                            <label for="ilErgin">İl Seçiniz:</label>
+                            <select id="ilErgin" name="il" required>
+                                <option value="">İl seçiniz</option>
+                                <option value="istanbul">İstanbul</option>
+                                <option value="ankara">Ankara</option>
+                                <option value="izmir">İzmir</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ilceErgin">İlçe Seçiniz:</label>
+                            <select id="ilceErgin" name="ilce" required>
+                                <option value="">İlçe seçiniz</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mahkemeErgin">Görevli ve Yetkili Mahkeme:</label>
+                            <input type="text" id="mahkemeErgin" name="mahkeme" readonly>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="info-section">
+                    <h2>Gerekli Belgeler</h2>
+                    <ul class="documents-list">
+                        <li><i class="fas fa-id-card"></i> Nüfus cüzdanı</li>
+                        <li><i class="fas fa-file-alt"></i> Ergin kılınma dilekçesi</li>
+                        <li><i class="fas fa-file-signature"></i> Veli muvafakatnamesi</li>
+                        <li><i class="fas fa-file-medical"></i> Sağlık raporu</li>
+                    </ul>
+                </div>
+
+                <div class="result-box">
+                    <h3>Önemli Bilgilendirme</h3>
+                    <p>Ergin kılınma başvurusu için tüm belgelerin eksiksiz olması gerekmektedir.</p>
+                    <p>Veli muvafakatnamesinin noter onaylı olması gerekmektedir.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dilekçe Şablonu -->
+        <section id="dilekce-sablonu" class="page-section">
+            <div class="dilekce-container">
+                <div class="dilekce-header">
+                    <h2 class="dilekce-title" id="dilekceTypeTitle">Dilekçe Şablonu</h2>
+                </div>
+
+                <div class="dilekce-content">
+                    <div class="dilekce-field">
+                        <label for="dilekceMetni">Dilekçe Metni:</label>
+                        <textarea id="dilekceMetni" placeholder="Dilekçe metninizi giriniz" style="min-height: 500px;"></textarea>
+                    </div>
+                </div>
+
+                <div class="dilekce-actions">
+                    <button class="dilekce-button" onclick="previewDilekce()">
+                        <i class="fas fa-eye"></i>
+                        Önizle
+                    </button>
+                    <button class="dilekce-button" onclick="downloadPDF()">
+                        <i class="fas fa-download"></i>
+                        PDF İndir
+                    </button>
+                    <button class="dilekce-button secondary" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left"></i>
+                        Geri Dön
+                    </button>
+                </div>
+
+                <div id="dilekcePreview">
+                    <div id="previewContent"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Popup -->
+    <div class="modal-overlay" id="disclaimerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">🔒 SORUMLULUK REDDİ VE BİLGİLENDİRME ONAY FORMU</h2>
+            </div>
+            <div class="modal-body">
+                <div class="disclaimer-text">
+                    <p>Lütfen bu platformu kullanmadan önce aşağıdaki metni dikkatlice okuyunuz.</p>
+                    
+                    <h3>1. HİZMETİN KAPSAMI</h3>
+                    <p>Bu internet sitesinde sunulan tüm dilekçe şablonları, yönlendirmeler ve içerikler yalnızca genel bilgilendirme amacıyla hazırlanmıştır.</p>
+                    <p>Yayınlanan dilekçeler ve içerikler, hiçbir şekilde hukuki danışmanlık hizmeti niteliği taşımamaktadır.</p>
+                    <p>Her somut olay kendine özgüdür; sitedeki bilgiler, sizin özel hukuki durumunuza uygun veya yeterli olmayabilir.</p>
+                    <p>Platformdaki şablonlar, kullanıcıya örnek oluşturmak amacıyla sunulmakta olup, mevzuat değişiklikleri nedeniyle güncelliğini yitirmiş olabilir.</p>
+
+                    <h3>2. YASAL SINIRLAMALAR</h3>
+                    <p>Bu platform, 1136 sayılı Avukatlık Kanunu kapsamında bireysel hukuki danışmanlık hizmeti sunmaz.</p>
+                    <p>Site içeriği ile avukat-müvekkil ilişkisi kurulmaz ve hiçbir içerik bu ilişkinin ikamesi olarak kullanılamaz.</p>
+                    <p>Dilekçe örnekleri ve açıklamalar, yalnızca genel yönlendirme amacıyla paylaşılmaktadır.</p>
+                    <p>Bu platform, herhangi bir kamu kurumu, baro veya resmi makam hizmeti değildir.</p>
+
+                    <h3>3. ÖNEMLİ UYARI</h3>
+                    <p>Kendi hukuki durumunuza ilişkin doğru adımları atmak ve hak kaybına uğramamak için uzman bir avukata danışmanız tavsiye edilir.</p>
+                    <p>Bu platform üzerinden sağlanan bilgiler, zaman zaman yapay zekâ destekli, algoritmik ya da otomatik sistemler aracılığıyla oluşturulabilir. Bu nedenle:</p>
+                    <p>İnsan denetimiyle hazırlanmış profesyonel hukuki görüşlerin yerine geçmez.</p>
+
+                    <h3>4. SORUMLULUK SINIRLANDIRMASI</h3>
+                    <p>Kullanıcılar:</p>
+                    <ul>
+                        <li>Site içeriklerinin doğruluğunu ve güncelliğini kontrol etmekle yükümlüdür.</li>
+                        <li>Şablonları kullanırken, kendi özel durumlarına uygunluğunu değerlendirmekle sorumludur.</li>
+                        <li>Şablonları düzenlemeden ve doğrulatmadan kullanmaları halinde doğabilecek tüm sonuçları kabul etmiş sayılır.</li>
+                    </ul>
+
+                    <h3>5. HUKUKİ SORUMLULUK UYARISI</h3>
+                    <p>Platformun kullanımı sonucu ortaya çıkabilecek her türlü:</p>
+                    <ul>
+                        <li>Hukuki</li>
+                        <li>Cezai</li>
+                        <li>İdari</li>
+                        <li>Mali</li>
+                    </ul>
+                    <p>sorumluluk tamamen kullanıcıya aittir.</p>
+                    <p>Platform yöneticileri, içerik üreticileri ve site sahipleri, doğrudan veya dolaylı hiçbir zarar, kayıp veya uyuşmazlıktan ötürü sorumluluk kabul etmez.</p>
+
+                    <h3>6. KİŞİSEL VERİLER VE AÇIK RIZA</h3>
+                    <p>Bu onay formunu işaretlemekle birlikte:</p>
+                    <ul>
+                        <li>Platformun [KVKK Aydınlatma Metni]'ni okuduğumu,</li>
+                        <li>Gerekli bilgilendirme kapsamında kişisel verilerimin işlenmesini anladığımı ve kabul ettiğimi</li>
+                    </ul>
+                    <p>beyan ederim.</p>
+
+                    <h3>7. KULLANICI ONAYI</h3>
+                    <p>Aşağıdaki kutucuğu işaretleyerek:</p>
+                    <ul>
+                        <li>Yukarıdaki bilgilendirme ve sorumluluk reddi metnini okuduğumu, anladığımı ve kabul ettiğimi,</li>
+                        <li>Sitedeki içerikleri kullanırken tüm sorumluluğun bana ait olduğunu,</li>
+                        <li>Platform sahipleri ve içerik sağlayıcılarının hiçbir hukuki sorumluluğunun bulunmadığını,</li>
+                        <li>Gerektiğinde uzman bir avukata danışmam gerektiğini,</li>
+                    </ul>
+                    <p>kabul ve taahhüt ediyorum.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="consentCheckbox">
+                    <label for="consentCheckbox" class="checkbox-label">Okudum, anladım ve kabul ediyorum.</label>
+                </div>
+                <div class="modal-buttons">
+                    <button id="closeButton" class="btn-continue" disabled>Devam Et</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Sayfa yüklendiğinde çalışacak fonksiyonlar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal elementlerini seç
+            const disclaimerModal = document.getElementById('disclaimerModal');
+            const consentCheckbox = document.getElementById('consentCheckbox');
+            const closeButton = document.getElementById('closeButton');
+
+            // Modal'ı göster/gizle fonksiyonu
+            function toggleModal(show) {
+                if (show) {
+                    disclaimerModal.classList.add('active');
+                } else {
+                    disclaimerModal.classList.remove('active');
+                }
+            }
+
+            // Checkbox değişikliğini dinle
+            consentCheckbox.addEventListener('change', function() {
+                closeButton.disabled = !this.checked;
+                closeButton.classList.toggle('enabled', this.checked);
+            });
+
+            // Kapatma butonuna tıklandığında
+            closeButton.addEventListener('click', function() {
+                if (consentCheckbox.checked) {
+                    disclaimerModal.style.display = 'none';
+                    disclaimerModal.classList.remove('active');
+                }
+            });
+
+            // Her işlem için ayrı form işlemleri
+            function setupCourtForm(ilId, ilceId, mahkemeId) {
+                const ilSelect = document.getElementById(ilId);
+                const ilceSelect = document.getElementById(ilceId);
+                const mahkemeInput = document.getElementById(mahkemeId);
+
+                if (!ilSelect || !ilceSelect || !mahkemeInput) return;
+
+                ilSelect.addEventListener('change', function() {
+                    ilceSelect.innerHTML = '<option value="">İlçe seçiniz</option>';
+                    
+                    const ilceler = {
+                        'istanbul': ['Kadıköy', 'Beşiktaş', 'Üsküdar', 'Şişli'],
+                        'ankara': ['Çankaya', 'Keçiören', 'Mamak', 'Yenimahalle'],
+                        'izmir': ['Konak', 'Karşıyaka', 'Bornova', 'Buca']
+                    };
+
+                    const secilenIl = this.value;
+                    if (secilenIl && ilceler[secilenIl]) {
+                        ilceler[secilenIl].forEach(ilce => {
+                            const option = document.createElement('option');
+                            option.value = ilce.toLowerCase();
+                            option.textContent = ilce;
+                            ilceSelect.appendChild(option);
+                        });
+                    }
+                });
+
+                ilceSelect.addEventListener('change', function() {
+                    const il = ilSelect.value;
+                    const ilce = this.value;
+                    
+                    if (il && ilce) {
+                        mahkemeInput.value = `${il.toUpperCase()} ${ilce.toUpperCase()} ASLİYE HUKUK MAHKEMESİ`;
+                    } else {
+                        mahkemeInput.value = '';
+                    }
+                });
+            }
+
+            // Her işlem için form kurulumu
+            setupCourtForm('ilAdSoyad', 'ilceAdSoyad', 'mahkemeAdSoyad');
+            setupCourtForm('ilEvlenme', 'ilceEvlenme', 'mahkemeEvlenme');
+            setupCourtForm('ilErgin', 'ilceErgin', 'mahkemeErgin');
+
+            // Dilekçe hazırlama sayfasına yönlendirme
+            window.showDilekceHazirla = function(type) {
+                const dilekceTypeTitle = document.getElementById('dilekceTypeTitle');
+                const mahkemeAdi = document.getElementById('mahkemeAdi');
+                const dilekceMetni = document.getElementById('dilekceMetni');
+                
+                // Dilekçe türüne göre başlık ve şablon güncelleme
+                switch(type) {
+                    case 'ad-soyad':
+                        dilekceTypeTitle.textContent = 'Ad Soyad Değişikliği Dilekçesi';
+                        dilekceMetni.value = `[TARİH]
+[T.C. KİMLİK NUMARASI]
+[ADINIZ SOYADINIZ]
+[AÇIK ADRESİNİZ]
+[TEL/E-POSTA]
+
+[İLGİLİ MAHKEMENİN ADI] BİLDİRİLMEK ÜZERE
+[NÜFUSA KAYITLI OLDUĞUNUZ YER] ASLİYE HUKUK MAHKEMESİ SAYIN HAKİMLİĞİNE
+
+DAVACI: [ADINIZ SOYADINIZ] (T.C. Kimlik No: [T.C. KİMLİK NUMARANIZ])
+
+KONU: Ad ve/veya soyad değişikliği talebimdir.
+
+AÇIKLAMALAR:
+1. Nüfus kayıtlarında adım/soyadım "[MEVCUT AD/SOYAD]" olarak geçmektedir. Ancak bu isim/soyisim;
+[GEREKÇENİZİ DETAYLI OLARAK AÇIKLAYIN]
+
+2. Türk Medeni Kanunu'nun 27. maddesi uyarınca, haklı sebeplerin varlığı halinde ad ve soyadı değişikliği talep edilebilmektedir. Yukarıda açıkladığım nedenler, kanunda öngörülen haklı sebep koşulunu karşılamaktadır.
+
+3. Bu nedenle adımın/soyadımın "[YENİ ADINIZ/SOYADINIZ]" olarak değiştirilmesini talep ediyorum. Talep ettiğim yeni isim/soyisim, kamu düzenine aykırı olmayıp, kimseyi yanıltıcı nitelikte değildir.
+
+HUKUKİ SEBEPLER:
+4721 Sayılı Türk Medeni Kanunu md. 27
+5490 Sayılı Nüfus Hizmetleri Kanunu
+İlgili mevzuat
+
+DELİLLER:
+Nüfus kayıt örneği
+Kimlik fotokopisi
+Adres kayıt belgesi
+[Varsa psikolojik rapor]
+[Varsa ismin/soyismin yarattığı sorunları gösteren belgeler]
+Tanık beyanları
+Her türlü yasal delil
+
+SONUÇ VE İSTEM: Yukarıda arz ve izah ettiğim nedenlerle;
+1. Adımın/soyadımın "[YENİ ADINIZ/SOYADINIZ]" olarak değiştirilmesine,
+2. Kararın nüfus idaresine bildirilmesine,
+3. Yargılama giderlerinin tarafıma yükletilmesine,
+Karar verilmesini saygılarımla arz ve talep ederim.
+
+[TARİH]
+
+DAVACI
+[ADINIZ SOYADINIZ]
+[İMZA]
+
+EKLER:
+1. Nüfus kayıt örneği
+2. Kimlik fotokopisi
+3. [Diğer delil ve belgeler]`;
+                        break;
+                    case 'evlenme-izni':
+                        dilekceTypeTitle.textContent = 'Evlenme İzni Dilekçesi';
+                        break;
+                    case 'ergin-kilma':
+                        dilekceTypeTitle.textContent = 'Ergin Kılınma Dilekçesi';
+                        break;
+                }
+
+                // Seçili mahkeme bilgisini al
+                const mahkemeInput = document.getElementById(`mahkeme${type.charAt(0).toUpperCase() + type.slice(1)}`);
+                if (mahkemeInput) {
+                    mahkemeAdi.value = mahkemeInput.value;
+                }
+
+                showPage('dilekce-sablonu');
+            }
+
+            // Dilekçe önizleme
+            function previewDilekce() {
+                const previewContent = document.getElementById('previewContent');
+                const dilekceMetni = document.getElementById('dilekceMetni').value;
+
+                previewContent.innerHTML = `
+                    <div style="font-family: 'Times New Roman', Times, serif; line-height: 1.6; padding: 2cm;">
+                        <div style="white-space: pre-line;">
+                            ${dilekceMetni}
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('dilekcePreview').classList.add('active');
+            }
+
+            // PDF indirme
+            function downloadPDF() {
+                const element = document.getElementById('previewContent');
+                const opt = {
+                    margin: 1,
+                    filename: 'dilekce.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                };
+
+                html2pdf().set(opt).from(element).save();
+            }
+
+            // Sayfa değiştirme fonksiyonları
+            window.showPage = function(pageId) {
+                // Tüm sayfaları gizle
+                document.querySelectorAll('.page-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Seçilen sayfayı göster
+                const selectedPage = document.getElementById(pageId);
+                if (selectedPage) {
+                    selectedPage.classList.add('active');
+                }
+            }
+
+            window.openProcessPage = function(processId) {
+                showPage(processId);
+                disclaimerModal.style.display = 'flex';
+                toggleModal(true); // İşlem sayfası açıldığında modal'ı göster
+            }
+
+            // Mobil menü toggle
+            window.toggleMobileMenu = function() {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.classList.toggle('active');
+            }
+        });
+    </script>
+</body>
+</html>
