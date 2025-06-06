@@ -205,10 +205,10 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">
+            <div class="nav-brand" onclick="showPage('home')">
                 <i class="fas fa-balance-scale"></i>
-                Çekişmesiz Yargı
-            </a>
+                <span>Çekişmesiz Yargı</span>
+            </div>
             
             <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
@@ -224,19 +224,25 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <div class="dropdown-item" onclick="openProcessPage('ad-soyad')">
+                        <div class="dropdown-item" onclick="showDisclaimerModal('ad-soyad')">
                             <h4>Ad Soyad Değişikliği</h4>
                             <p>Kişisel ad ve soyad değişikliği işlemleri</p>
                         </div>
-                        <div class="dropdown-item" onclick="openProcessPage('evlenme-izni')">
+                        <div class="dropdown-item" onclick="showDisclaimerModal('evlenme-izni')">
                             <h4>Evlenme Yaşı Gelmeyene Evlenme İzni</h4>
                             <p>18 yaşından küçükler için evlenme izni</p>
                         </div>
-                        <div class="dropdown-item" onclick="openProcessPage('ergin-kilma')">
+                        <div class="dropdown-item" onclick="showDisclaimerModal('ergin-kilma')">
                             <h4>Ergin Kılınma</h4>
                             <p>Reşit olmayan kişilerin ergin kılınması</p>
                         </div>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showPage('blog')">
+                        <i class="fas fa-blog"></i>
+                        Blog
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" onclick="showPage('contact')">
@@ -256,88 +262,38 @@
     <main class="main-content">
         <!-- Ana Sayfa -->
         <section id="home" class="page-section active">
-            <div class="page-title">Ana Sayfa</div>
-            <div class="page-subtitle">Çekişmesiz yargı işlemleri için kapsamlı rehber</div>
-            
+            <div class="main-content">
             <div class="info-section">
                 <h2>Hoş Geldiniz</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    <p style="color: var(--text-primary); margin-bottom: 1.5rem;">
                     Bu platform, çekişmesiz yargı işlemlerinizi kolaylaştırmak için tasarlanmıştır. 
-                    Üst menüden yapmak istediğiniz işlemi seçerek başlayabilirsiniz.
-                </p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                    <div class="step-card">
-                        <div class="step-number">1</div>
-                        <div class="step-title">İşlem Seçin</div>
+                        Aşağıdaki işlemlerden birini seçerek başlayabilirsiniz.
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                        <div class="step-card" onclick="showDisclaimerModal('ad-soyad')" style="cursor: pointer;">
+                            <div class="step-number"><i class="fas fa-user-edit"></i></div>
+                            <div class="step-title">Ad Soyad Değişikliği</div>
                         <div class="step-description">
-                            Üst menüden yapmak istediğiniz işlemi seçin (Ad Soyad Değişikliği, Evlenme İzni veya Ergin Kılınma)
+                                Kişisel ad ve soyad değişikliği işlemleri için gerekli belgeler ve süreçler
                         </div>
                     </div>
                     
-                    <div class="step-card">
-                        <div class="step-number">2</div>
-                        <div class="step-title">Bilgileri Girin</div>
+                        <div class="step-card" onclick="showDisclaimerModal('evlenme-izni')" style="cursor: pointer;">
+                            <div class="step-number"><i class="fas fa-ring"></i></div>
+                            <div class="step-title">Evlenme İzni</div>
                         <div class="step-description">
-                            İlgili formları doldurun ve gerekli belgeleri hazırlayın
+                                18 yaşından küçükler için evlenme izni başvuru süreci
                         </div>
                     </div>
                     
-                    <div class="step-card">
-                        <div class="step-number">3</div>
-                        <div class="step-title">Dilekçe Oluşturun</div>
-                        <div class="step-description">
-                            Sistem otomatik olarak dilekçenizi oluşturacak ve size sunacaktır
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-section">
-                <h2>İşlem Sayfası Formatı</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-                    Her işlem sayfası aşağıdaki bölümleri içerir:
-                </p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                    <div class="step-card">
-                        <div class="step-number"><i class="fas fa-gavel"></i></div>
-                        <div class="step-title">Hukuki Bilgi</div>
-                        <div class="step-description">
-                            İşlemin dayanağı olan yasal düzenlemeler ve hukuki süreç hakkında detaylı bilgi
-                        </div>
-                    </div>
-
-                    <div class="step-card">
+                        <div class="step-card" onclick="showDisclaimerModal('ergin-kilma')" style="cursor: pointer;">
                         <div class="step-number"><i class="fas fa-balance-scale"></i></div>
-                        <div class="step-title">Mahkeme Tespiti</div>
+                            <div class="step-title">Ergin Kılınma</div>
                         <div class="step-description">
-                            İşlemin yapılacağı görevli ve yetkili mahkemenin belirlenmesi
+                                Reşit olmayan kişilerin ergin kılınması için gerekli işlemler
                         </div>
                     </div>
-
-                    <div class="step-card">
-                        <div class="step-number"><i class="fas fa-file-alt"></i></div>
-                        <div class="step-title">Dilekçe Şablonu</div>
-                        <div class="step-description">
-                            Otomatik oluşturulan dilekçe şablonu ve düzenleme imkanı
-                        </div>
-                    </div>
-
-                    <div class="step-card">
-                        <div class="step-number"><i class="fas fa-folder-open"></i></div>
-                        <div class="step-title">Gerekli Belgeler</div>
-                        <div class="step-description">
-                            İşlem için gerekli tüm belgelerin listesi ve açıklamaları
-                        </div>
-                    </div>
-
-                    <div class="step-card">
-                        <div class="step-number"><i class="fas fa-check-circle"></i></div>
-                        <div class="step-title">Sonuç</div>
-                        <div class="step-description">
-                            İşlem sonrası yapılması gerekenler ve önemli bilgilendirmeler
-                        </div>
                     </div>
                 </div>
             </div>
@@ -363,10 +319,62 @@
                 </div>
 
                 <div class="info-section">
-                    <h2>Hukuki Bilgi</h2>
-                    <p style="color: var(--text-secondary); line-height: 1.7;">
-                        Türk Medeni Kanunu'nun 27. maddesi uyarınca, haklı sebeplerin varlığı halinde ad ve soyadı değişikliği talep edilebilmektedir. Ad değişikliği için başvuru, nüfus kaydının bulunduğu yer asliye hukuk mahkemesine yapılır.
-                    </p>
+                    <h2>Bilgilendirme</h2>
+                    <div style="color: var(--text-secondary); line-height: 1.7;">
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <h3 style="color: var(--text-primary); font-size: 1.4rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-gavel"></i>
+                                Hukuki Nitelik
+                            </h3>
+                            <p>Ad veya soyad değişikliği, kişinin nüfus kayıtlarında yer alan kimlik bilgilerinin değiştirilmesine yönelik bir <strong>çekişmesiz yargı</strong> işlemidir (HMK m.382). Türk Medeni Kanunu'nun 27. maddesi uyarınca, haklı sebeplerin varlığı halinde ad ve soyadı değişikliği talep edilebilmektedir.</p>
+                            <p><strong>Kanundaki "haklı sebep" ifadesi geniş anlamda değerlendirilir.</strong> Sadece dıştan görünen sebepler değil, kişinin kendi duygusal ve kişisel gerekçeleri de bu kapsamdadır. Örneğin, bir kişi adını ya da soyadını kendine ait hissetmiyorsa, bu bile değişiklik için geçerli bir neden sayılabilir.</p>
+                            <p>Adın ya da soyadının gülünç bulunması, kişide kötü anılar uyandırması, toplumda kötü tanınan bir kişiyle aynı olması veya mesleki ya da sanatsal nedenlerle uygun görülmemesi gibi pek çok farklı sebeple ad veya soyadı değişikliği davası açılabilir.</p>
+                        </div>
+
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <h3 style="color: var(--text-primary); font-size: 1.4rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-balance-scale"></i>
+                                Dava Süreci
+                            </h3>
+                            <p>Dava, kişinin <strong>ikamet ettiği yerdeki Asliye Hukuk Mahkemesi'nde</strong> açılır. Davaya Nüfus Müdürlüğü tarafından görevlendirilen bir memur davalı taraf olarak katılır. Mahkemeye sunulan dilekçe ve ek belgeler değerlendirilir; sunulan dilekçe, belgeler ve haklı nedenin niteliğine göre genellikle tek celsede sonuçlanır. Tanıklar dinlenebilir. Gerekli görülürse duruşmaya çağrılabilirsiniz.</p>
+                        </div>
+
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <h3 style="color: var(--text-primary); font-size: 1.4rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-clock"></i>
+                                Süre ve Masraf
+                            </h3>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Ortalama süresi: 1–3 ay
+                                </li>
+                                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    Mahkeme harç ve giderleri: ~500–1500 TL
+                                </li>
+                                <li style="display: flex; align-items: flex-start; gap: 0.5rem; text-align: left;">
+                                    <i class="fas fa-user-tie" style="margin-top: 0.2rem;"></i>
+                                    <span>Site yardımıyla bizzat dava açmamanız halinde vekalet ücreti. (Avukat veya vekil zorunluluğu olmasa da hukuki işleminizin eksiksiz yerine getirilmesi ve takibi için uzman bir avukata danışmanız tavsiye edilir.)</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: 1.5rem; border-radius: 12px;">
+                            <h3 style="color: var(--text-primary); font-size: 1.4rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-file-alt"></i>
+                                Nasıl Başvurulur?
+                            </h3>
+                            <p style="text-align: left;">Bu site aracılığıyla:</p>
+                            <ol style="padding-left: 1.5rem; text-align: left;">
+                                <li style="margin-bottom: 0.5rem; text-align: left;">Size uygun mahkemeyi otomatik belirleyin.</li>
+                                <li style="margin-bottom: 0.5rem; text-align: left;">Dava dilekçesini sistemle birlikte hazırlayın.</li>
+                                <li style="margin-bottom: 0.5rem; text-align: left;">Gerekli belgeleri öğrenin ve tamamlayın.</li>
+                                <li style="margin-bottom: 0.5rem; text-align: left;">E-Devlet üzerinden UYAP Vatandaş Portal'dan veya fiziken adliyedeki tevzi bürosuna giderek dava dilekçenizi ve eklerini teslim edin.</li>
+                                <li style="text-align: left;">Mahkemeden duruşma günü bekleyin.</li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="info-section">
@@ -635,7 +643,7 @@
     <div class="modal-overlay" id="disclaimerModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">🔒 SORUMLULUK REDDİ VE BİLGİLENDİRME ONAY FORMU</h2>
+                <h2>Önemli Bilgilendirme</h2>
             </div>
             <div class="modal-body">
                 <div class="disclaimer-text">
@@ -698,11 +706,15 @@
             </div>
             <div class="modal-footer">
                 <div class="checkbox-container">
-                    <input type="checkbox" id="consentCheckbox">
-                    <label for="consentCheckbox" class="checkbox-label">Okudum, anladım ve kabul ediyorum.</label>
+                    <input type="checkbox" id="disclaimerCheckbox" onchange="toggleContinueButton()">
+                    <label for="disclaimerCheckbox" class="checkbox-label">
+                        Yukarıdaki bilgilendirmeyi okudum ve kabul ediyorum
+                    </label>
                 </div>
                 <div class="modal-buttons">
-                    <button id="closeButton" class="btn-continue" disabled>Devam Et</button>
+                    <button class="btn-continue" id="continueButton" onclick="continueToProcess()">
+                        Devam Et
+                    </button>
                 </div>
             </div>
         </div>
@@ -710,393 +722,39 @@
 
     <!-- JavaScript -->
     <script>
-        // Sayfa yüklendiğinde çalışacak fonksiyonlar
-        document.addEventListener('DOMContentLoaded', function() {
-            // Modal elementlerini seç
-            const disclaimerModal = document.getElementById('disclaimerModal');
-            const consentCheckbox = document.getElementById('consentCheckbox');
-            const modalCloseButton = document.getElementById('closeButton');
-            const previewCloseButton = document.querySelector('.close-preview');
+        let targetPage = '';
 
-            // Modal'ı göster/gizle fonksiyonu
-            window.toggleModal = function(show) {
-                if (show) {
-                    disclaimerModal.classList.add('active');
-                } else {
-                    disclaimerModal.classList.remove('active');
-                }
-            }
+        function showDisclaimerModal(page) {
+            targetPage = page;
+            const modal = document.getElementById('disclaimerModal');
+            modal.classList.add('active');
+            document.getElementById('disclaimerCheckbox').checked = false;
+            toggleContinueButton();
+        }
 
-            // Checkbox değişikliğini dinle
-            consentCheckbox.addEventListener('change', function() {
-                modalCloseButton.disabled = !this.checked;
-                modalCloseButton.classList.toggle('enabled', this.checked);
-            });
-
-            // Kapatma butonuna tıklandığında
-            modalCloseButton.addEventListener('click', function() {
-                if (consentCheckbox.checked) {
-                    disclaimerModal.style.display = 'none';
-                    disclaimerModal.classList.remove('active');
-                }
-            });
-
-            // Önizleme kapatma butonu için event listener
-            if (previewCloseButton) {
-                previewCloseButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closePreview();
-                });
-            }
-
-            // Her işlem için ayrı form işlemleri
-            function setupCourtForm(ilId, ilceId, mahkemeId) {
-                const ilSelect = document.getElementById(ilId);
-                const ilceSelect = document.getElementById(ilceId);
-                const mahkemeInput = document.getElementById(mahkemeId);
-
-                if (!ilSelect || !ilceSelect || !mahkemeInput) return;
-
-                ilSelect.addEventListener('change', function() {
-                    ilceSelect.innerHTML = '<option value="">İlçe seçiniz</option>';
-                    
-                    const ilceler = {
-                        'istanbul': ['Kadıköy', 'Beşiktaş', 'Üsküdar', 'Şişli'],
-                        'ankara': ['Çankaya', 'Keçiören', 'Mamak', 'Yenimahalle'],
-                        'izmir': ['Konak', 'Karşıyaka', 'Bornova', 'Buca']
-                    };
-
-                    const secilenIl = this.value;
-                    if (secilenIl && ilceler[secilenIl]) {
-                        ilceler[secilenIl].forEach(ilce => {
-                            const option = document.createElement('option');
-                            option.value = ilce.toLowerCase();
-                            option.textContent = ilce;
-                            ilceSelect.appendChild(option);
-                        });
-                    }
-                });
-
-                ilceSelect.addEventListener('change', function() {
-                    const il = ilSelect.value;
-                    const ilce = this.value;
-                    
-                    if (il && ilce) {
-                        mahkemeInput.value = `${il.toUpperCase()} ${ilce.toUpperCase()} ASLİYE HUKUK MAHKEMESİ`;
+        function toggleContinueButton() {
+            const checkbox = document.getElementById('disclaimerCheckbox');
+            const button = document.getElementById('continueButton');
+            button.disabled = !checkbox.checked;
+            if (checkbox.checked) {
+                button.classList.add('enabled');
                     } else {
-                        mahkemeInput.value = '';
-                    }
-                });
+                button.classList.remove('enabled');
             }
+        }
 
-            // Her işlem için form kurulumu
-            setupCourtForm('ilAdSoyad', 'ilceAdSoyad', 'mahkemeAdSoyad');
-            setupCourtForm('ilEvlenme', 'ilceEvlenme', 'mahkemeEvlenme');
-            setupCourtForm('ilErgin', 'ilceErgin', 'mahkemeErgin');
-
-            // Dilekçe hazırlama sayfasına yönlendirme
-            window.showDilekceHazirla = function(type) {
-                const dilekceTypeTitle = document.getElementById('dilekceTypeTitle');
-                const mahkemeAdi = document.getElementById('mahkemeAdi');
-                const dilekceMetni = document.getElementById('dilekceMetni');
-                
-                // Dilekçe türüne göre başlık ve şablon güncelleme
-                switch(type) {
-                    case 'ad-soyad':
-                        dilekceTypeTitle.textContent = 'Ad Soyad Değişikliği Dilekçesi';
-                        dilekceMetni.value = `[TARİH]
-[T.C. KİMLİK NUMARASI]
-[ADINIZ SOYADINIZ]
-[AÇIK ADRESİNİZ]
-[TEL/E-POSTA]
-
-[İLGİLİ MAHKEMENİN ADI] BİLDİRİLMEK ÜZERE
-[NÜFUSA KAYITLI OLDUĞUNUZ YER] ASLİYE HUKUK MAHKEMESİ SAYIN HAKİMLİĞİNE
-
-DAVACI: [ADINIZ SOYADINIZ] (T.C. Kimlik No: [T.C. KİMLİK NUMARANIZ])
-
-KONU: Ad ve/veya soyad değişikliği talebimdir.
-
-AÇIKLAMALAR:
-1. Nüfus kayıtlarında adım/soyadım "[MEVCUT AD/SOYAD]" olarak geçmektedir. Ancak bu isim/soyisim;
-[GEREKÇENİZİ DETAYLI OLARAK AÇIKLAYIN]
-
-2. Türk Medeni Kanunu'nun 27. maddesi uyarınca, haklı sebeplerin varlığı halinde ad ve soyadı değişikliği talep edilebilmektedir. Yukarıda açıkladığım nedenler, kanunda öngörülen haklı sebep koşulunu karşılamaktadır.
-
-3. Bu nedenle adımın/soyadımın "[YENİ ADINIZ/SOYADINIZ]" olarak değiştirilmesini talep ediyorum. Talep ettiğim yeni isim/soyisim, kamu düzenine aykırı olmayıp, kimseyi yanıltıcı nitelikte değildir.
-
-HUKUKİ SEBEPLER:
-4721 Sayılı Türk Medeni Kanunu md. 27
-5490 Sayılı Nüfus Hizmetleri Kanunu
-İlgili mevzuat
-
-DELİLLER:
-Nüfus kayıt örneği
-Kimlik fotokopisi
-Adres kayıt belgesi
-[Varsa psikolojik rapor]
-[Varsa ismin/soyismin yarattığı sorunları gösteren belgeler]
-Tanık beyanları
-Her türlü yasal delil
-
-SONUÇ VE İSTEM: Yukarıda arz ve izah ettiğim nedenlerle;
-1. Adımın/soyadımın "[YENİ ADINIZ/SOYADINIZ]" olarak değiştirilmesine,
-2. Kararın nüfus idaresine bildirilmesine,
-3. Yargılama giderlerinin tarafıma yükletilmesine,
-Karar verilmesini saygılarımla arz ve talep ederim.
-
-[TARİH]
-
-DAVACI
-[ADINIZ SOYADINIZ]
-[İMZA]
-
-EKLER:
-1. Nüfus kayıt örneği
-2. Kimlik fotokopisi
-3. [Diğer delil ve belgeler]`;
-                        break;
-                    case 'evlenme-izni':
-                        dilekceTypeTitle.textContent = 'Evlenme İzni Dilekçesi';
-                        dilekceMetni.value = `[TARİH]
-[T.C. KİMLİK NUMARASI]
-[ADINIZ SOYADINIZ (VELİ/VASİ)]
-[AÇIK ADRESİNİZ]
-[TEL/E-POSTA]
-[İLGİLİ YER] AİLE MAHKEMESİ SAYIN HAKİMLİĞİNE
-(Küçüğün yerleşim yerinin bulunduğu ildeki/ilçedeki Aile Mahkemesi)
-DAVACI VELİLER: [ANNE ADINIZ SOYADINIZ] (T.C. Kimlik No: [ANNE T.C. KİMLİK NUMARASI])
-[BABA ADINIZ SOYADINIZ] (T.C. Kimlik No: [BABA T.C. KİMLİK NUMARASI])
-KÜÇÜK: [KÜÇÜĞÜN ADI SOYADI] (T.C. Kimlik No: [KÜÇÜĞÜN T.C. KİMLİK NUMARASI])
-KONU: [KÜÇÜĞÜN ADI SOYADI]'nın evlenmesine izin verilmesi talebimizdir.
-AÇIKLAMALAR:
-1. Velisi bulunduğumuz [KÜÇÜĞÜN ADI SOYADI], [DOĞUM TARİHİ] doğumlu olup, 16 yaşını doldurmuş
-ancak henüz 18 yaşını doldurmamıştır. [Not: Türk Medeni Kanunu'na göre en az 16 yaşını doldurmuş
-olmak gerekir.]
-2. Küçük çocuğumuz [KÜÇÜĞÜN ADI SOYADI], [EVLENMEK İSTENİLEN KİŞİNİN ADI SOYADI] (T.C. Kimlik
-No: [EVLENİLECEK KİŞİNİN T.C. KİMLİK NUMARASI]) ile evlenmek istemektedir. Evlenmek istediği kişi
-[EVLENMEK İSTENİLEN KİŞİNİN YAŞI] yaşında olup [EVLENMEK İSTENİLEN KİŞİNİN AÇIK ADRESİ]
-adresinde ikamet etmektedir.
-3. Evlilik için Türk Medeni Kanunu'nun 124/2 maddesi uyarınca mahkemenizden izin talep etmekteyiz.
-Bu evlilik için gerekli olağanüstü bir durum ve haklı sebepler aşağıda açıklanmıştır: [Aşağıdaki
-sebepler arasından geçerli olanları detaylı olarak açıklayın:
-Evlilik dışı hamilelik durumu (doktor raporu eklemeyi unutmayın)
-Tarafların kültürel/sosyal gerekçeleri
-Tarafların duygusal bağlılığı ve birlikte yaşamaya başlamaları
-Ekonomik yaşam koşulları
-Ailelerin onayı ve desteği
-Küçüğün fiziksel ve ruhsal olgunluğu
-Evlilik için gerekli ekonomik/sosyal şartların varlığı
-Evliliğin küçüğün menfaatine olması]
-4. Küçüğün ve evleneceği kişinin evlilik konusundaki rızaları tam olup, biz veliler de bu evliliğe tam
-olarak rıza göstermekteyiz. Evlenecek kişilerin bu evlilikten beklentileri ve gelecek planları şunlardır:
-[Tarafların evlilikten beklentilerini ve gelecek planlarını detaylı olarak açıklayın.]
-5. Bu evlilik, küçüğün sosyal, psikolojik ve ekonomik yönden menfaatine olacaktır. [Bu iddianızı
-destekleyecek açıklamaları yapın.]
-HUKUKİ SEBEPLER:
-4721 Sayılı Türk Medeni Kanunu md. 124/2
-İlgili mevzuat
-DELİLLER:
-Küçüğün nüfus kayıt örneği
-Evlenecek kişinin nüfus kayıt örneği
-Tarafların rıza beyanları
-[Varsa hamilelik raporu]
-[Varsa psikolojik olgunluk raporu]
-[Varsa sosyal ve ekonomik durum belgeleri]
-[Varsa evlilik başvuru belgeleri]
-Tanık beyanları
-Her türlü yasal delil
-SONUÇ VE İSTEM: Yukarıda arz ve izah ettiğim nedenlerle;
-1. Türk Medeni Kanunu'nun 124/2 maddesi uyarınca velayetimiz altında bulunan [KÜÇÜĞÜN ADI
-SOYADI]'nın [EVLENMEK İSTENİLEN KİŞİNİN ADI SOYADI] ile evlenmesine izin verilmesine,
-2. Mahkemenizce gerekli görülürse sosyal inceleme raporu alınmasına,
-3. Yargılama giderlerinin tarafımıza yükletilmesine,
-Karar verilmesini saygılarımla arz ve talep ederim. [TARİH]
-VELİLER
-[ANNE ADINIZ SOYADINIZ] [BABA ADINIZ SOYADINIZ]
-[İMZA] [İMZA]
-KÜÇÜĞÜN BEYANI
-Ben [KÜÇÜĞÜN ADI SOYADI], kendi özgür irademle [EVLENMEK İSTENİLEN KİŞİNİN ADI SOYADI] ile
-evlenmek istiyorum. Bu evlilik için mahkemenizden izin verilmesini talep ediyorum.
-[KÜÇÜĞÜN ADI SOYADI]
-[İMZA]
-EKLER:
-1. Nüfus kayıt örnekleri (küçük ve evlenecek kişi)
-2. [Varsa tıbbi raporlar]
-3. [Diğer delil ve belgeler]`;
-                        break;
-                    case 'ergin-kilma':
-                        dilekceTypeTitle.textContent = 'Ergin Kılınma Dilekçesi';
-                        dilekceMetni.value = `[TARİH]
-[T.C. KİMLİK NUMARASI]
-[ADINIZ SOYADINIZ]
-[AÇIK ADRESİNİZ]
-[TEL/E-POSTA]
-[İLGİLİ YER] ASLİYE HUKUK MAHKEMESİ SAYIN HAKİMLİĞİNE
-(Yerleşim yerinizin bulunduğu ildeki/ilçedeki Asliye Hukuk Mahkemesi)
-DAVACI: [ADINIZ SOYADINIZ] (T.C. Kimlik No: [T.C. KİMLİK NUMARANIZ])
-VELİ/VASİ: [VELİ/VASİ ADINIZ SOYADINIZ] (T.C. Kimlik No: [VELİ/VASİ T.C. KİMLİK NUMARASI])
-KONU: Ergin kılınma (TMK md. 12 uyarınca) talebimdir.
-AÇIKLAMALAR:
-1. Ben [ADINIZ SOYADINIZ], [DOĞUM TARİHİNİZ] doğumluyum ve halen 15 yaşımı doldurmuş
-bulunmaktayım. [Not: Bu dilekçe yalnızca 15 yaşını doldurmuş küçükler için geçerlidir.]
-2. Türk Medeni Kanunu'nun 12. maddesi uyarınca, 15 yaşını dolduran küçük, kendi isteği ve velisinin
-rızasıyla mahkemece ergin kılınabilmektedir.
-3. Halihazırda ekonomik bağımsızlığımı kazanmış bulunmaktayım. [Aşağıdaki bilgileri detaylı olarak
-açıklayın:
-Ne tür bir işte çalıştığınız
-Aylık ortalama geliriniz
-Ne kadar süredir çalıştığınız
-İş yerinizin bilgileri
-Kendi geçiminizi nasıl sağladığınız
-Fiziksel ve ruhsal gelişiminizin erginliğin getireceği sorumlulukları taşımaya elverişli olduğunu]
-4. Velim/vasim de ergin kılınmama rıza göstermektedir. Bu husus ekli rıza belgesinde/beyanında açıkça
-görülmektedir.
-5. Ergin kılınmamı gerektiren sebepler şunlardır: [Ergin kılınma talebinizin gerekçelerini açıklayın.
-Örneğin:
-İş hayatında karşılaştığınız yasal engeller
-Ticari faaliyetleri bağımsız yürütme ihtiyacı
-Mali konularda karar verme gerekliliği
-Eğitim ve sağlık konularında kendi kararlarınızı verme ihtiyacı
-Sosyal ve ekonomik hayatta karşılaştığınız engeller]
-HUKUKİ SEBEPLER:
-4721 Sayılı Türk Medeni Kanunu md. 12
-İlgili mevzuat
-DELİLLER:
-Nüfus kayıt örneği
-Veli/vasinin yazılı izin belgesi
-İş sözleşmesi/İşveren yazısı
-Gelir belgeleri (maaş bordrosu, banka hesap dökümü vb.)
-Çalışma belgesi
-Varsa işyeri belgeleri
-Tanık beyanları
-Her türlü yasal delil
-SONUÇ VE İSTEM: Yukarıda arz ve izah ettiğim nedenlerle;
-1. Türk Medeni Kanunu'nun 12. maddesi uyarınca ergin kılınmama,
-2. Kararın nüfus idaresine bildirilmesine,
-3. Mahkemenizce gerekli görülürse sosyal inceleme raporu alınmasına,
-4. Yargılama giderlerinin tarafıma yükletilmesine,
-Karar verilmesini saygılarımla arz ve talep ederim. [TARİH]
-DAVACI
-[ADINIZ SOYADINIZ]
-[İMZA]
-VELİ/VASİ ONAY
-[VELİ/VASİ ADINIZ SOYADINIZ]
-[İMZA]
-EKLER:
-1. Nüfus kayıt örnekleri
-2. Veli/vasi izin belgesi
-3. Gelir belgeleri
-4. [Diğer delil ve belgeler]`;
-                        break;
+        function continueToProcess() {
+            const checkbox = document.getElementById('disclaimerCheckbox');
+            if (checkbox.checked) {
+                const modal = document.getElementById('disclaimerModal');
+                modal.classList.remove('active');
+                if (targetPage) {
+                    showPage(targetPage);
                 }
-
-                // Seçili mahkeme bilgisini al
-                const mahkemeInput = document.getElementById(`mahkeme${type.charAt(0).toUpperCase() + type.slice(1)}`);
-                if (mahkemeInput) {
-                    mahkemeAdi.value = mahkemeInput.value;
-                }
-
-                showPage('dilekce-sablonu');
             }
+        }
 
-            // Dilekçe önizleme
-            function previewDilekce() {
-                const previewContent = document.getElementById('previewContent');
-                const dilekceMetni = document.getElementById('dilekceMetni').value;
-                const previewModal = document.getElementById('previewModal');
-
-                previewContent.textContent = dilekceMetni;
-                previewModal.classList.add('active');
-            }
-
-            // Önizlemeyi kapat
-            function closePreview() {
-                const previewModal = document.getElementById('previewModal');
-                previewModal.classList.remove('active');
-            }
-
-            // ESC tuşu ile kapatma
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
-                    closePreview();
-                }
-            });
-
-            // Dışarı tıklayınca kapatma
-            document.getElementById('previewModal').addEventListener('click', function(event) {
-                if (event.target === this) {
-                    closePreview();
-                }
-            });
-
-            // PDF indirme
-            function downloadPDF() {
-                const element = document.getElementById('previewContent');
-                const content = element.textContent;
-
-                // PDF için yeni bir div oluştur
-                const printDiv = document.createElement('div');
-                printDiv.style.cssText = `
-                    position: absolute;
-                    left: -9999px;
-                    top: -9999px;
-                    width: 21cm;
-                    min-height: 29.7cm;
-                    padding: 2cm;
-                    background: white;
-                    color: black;
-                    font-family: 'Times New Roman', Times, serif;
-                    font-size: 12pt;
-                    line-height: 1.6;
-                    white-space: pre-line;
-                `;
-                printDiv.textContent = content;
-                document.body.appendChild(printDiv);
-
-                const opt = {
-                    margin: 0,
-                    filename: 'dilekce.pdf',
-                    image: { type: 'jpeg', quality: 1 },
-                    html2canvas: { 
-                        scale: 2,
-                        backgroundColor: 'white',
-                        windowWidth: 794,
-                        windowHeight: 1123,
-                        logging: true,
-                        useCORS: true,
-                        onclone: function(clonedDoc) {
-                            const clonedElement = clonedDoc.querySelector('#previewContent');
-                            if (clonedElement) {
-                                clonedElement.style.color = 'black';
-                                clonedElement.style.backgroundColor = 'white';
-                            }
-                        }
-                    },
-                    jsPDF: { 
-                        unit: 'mm', 
-                        format: 'a4', 
-                        orientation: 'portrait',
-                        compress: true
-                    }
-                };
-
-                html2pdf()
-                    .set(opt)
-                    .from(printDiv)
-                    .save()
-                    .then(() => {
-                        document.body.removeChild(printDiv);
-                    })
-                    .catch(error => {
-                        console.error('PDF oluşturma hatası:', error);
-                        alert('PDF oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.');
-                    });
-            }
-
-            // Sayfa değiştirme fonksiyonları
-            window.showPage = function(pageId) {
+        function showPage(pageId) {
                 // Tüm sayfaları gizle
                 document.querySelectorAll('.page-section').forEach(section => {
                     section.classList.remove('active');
@@ -1109,16 +767,22 @@ EKLER:
                 }
             }
 
-            window.openProcessPage = function(processId) {
-                showPage(processId);
-                disclaimerModal.style.display = 'flex';
-                toggleModal(true); // İşlem sayfası açıldığında modal'ı göster
+        function toggleMobileMenu() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        }
+
+        // Sayfa yüklendiğinde çalışacak fonksiyonlar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Checkbox değişikliğini dinle
+            const checkbox = document.getElementById('disclaimerCheckbox');
+            if (checkbox) {
+                checkbox.addEventListener('change', toggleContinueButton);
             }
 
-            // Mobil menü toggle
-            window.toggleMobileMenu = function() {
-                const navMenu = document.getElementById('navMenu');
-                navMenu.classList.toggle('active');
+            // Devam Et butonuna tıklama olayını dinle
+            const continueButton = document.getElementById('continueButton');
+            if (continueButton) {
+                continueButton.addEventListener('click', continueToProcess);
             }
         });
     </script>
